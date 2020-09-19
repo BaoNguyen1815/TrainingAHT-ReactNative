@@ -33,10 +33,13 @@ export default function Search(props) {
         tabBarInactiveTextColor="grey"
         tabBarTextStyle={{fontSize: 16}}
         tabBarUnderlineStyle={{backgroundColor: '#000'}}
-        // tabBarPosition="overlayTop"
         initialPage={0}
         renderTabBar={() => <ScrollableTabBar style={{zIndex: 5}} />}>
-        <SearchResult tabLabel="All"></SearchResult>
+        <SearchResult
+          isVisible={props.isVisible} //
+          isPlay={props.isPlay} // Kiểu này không được
+          setIsVisible={props.setIsVisible}
+          tabLabel="All"></SearchResult>
         <SearchResult title="Song" tabLabel="Song"></SearchResult>
         <SearchResult title="Artist" tabLabel="Artist"></SearchResult>
         <SearchResult title="Playlist" tabLabel="Playlist"></SearchResult>

@@ -29,7 +29,14 @@ export default function SearchResult(props) {
         sections={props.title ? arr : DATA}
         keyExtractor={(item, index) => item + index}
         renderItem={({item}) =>
-          item == 0 ? <ArtistPotrait></ArtistPotrait> : <Song></Song>
+          item == 0 ? (
+            <ArtistPotrait></ArtistPotrait>
+          ) : (
+            <Song
+              setIsVisible={props.setIsVisible}
+              isPlay={props.isPlay}
+              isVisible={props.isVisible}></Song>
+          )
         }
         renderSectionHeader={({section: {title}}) => (
           <Text style={{fontSize: 18, fontWeight: 'bold', color: 'grey'}}>

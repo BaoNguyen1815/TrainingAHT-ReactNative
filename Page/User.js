@@ -9,7 +9,6 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export default class User extends Component {
   render() {
-    console.log(this.props);
     return (
       <View style={{flex: 1}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

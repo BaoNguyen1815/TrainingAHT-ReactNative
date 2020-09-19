@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import Homepage from './Page/Homepage';
 import Login from './Page/Login';
@@ -23,6 +23,8 @@ import ChartTabPage from './Page/ChartTabPage';
 import Search from './Page/Search';
 import SplashScreen from 'react-native-splash-screen';
 import {create} from 'react-test-renderer';
+import MainView from './Page/MusicPlay';
+import MusicPlay from './Page/MusicPlay';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -45,15 +47,25 @@ function LoginNavigator() {
   );
 }
 
-function HomeNavigator() {
+function HomeNavigator(props) {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="Homepage" component={Homepage} />
-      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="Search">
+        {(prop) => (
+          <Search
+            {...prop}
+            isVisible={props.isVisible}
+            setIsVisible={() => props.setIsVisible()}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }
+
 const App = () => {
+  const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     SplashScreen.hide();
   }, []);
@@ -63,6 +75,23 @@ const App = () => {
         labeled={false}
         activeColor="#e91e63"
         barStyle={{backgroundColor: '#fff'}}>
+        <Tab.Screen
+          name="Home"
+          options={{
+            tabBarIcon: () => (
+              <FontAwsomeIcon name="home" color="black" size={26} />
+            ),
+          }}>
+          {(props) => (
+            <HomeNavigator
+              {...props}
+              setIsVisible={() => {
+                setIsVisible(true);
+              }}
+              isVisible={isVisible}
+            />
+          )}
+        </Tab.Screen>
         <Tab.Screen
           name="mv"
           component={MV}
@@ -88,15 +117,7 @@ const App = () => {
               <FontAwsomeIcon name="bar-chart" color="black" size={26} />
             ),
           }}></Tab.Screen>
-        <Tab.Screen
-          name="Home"
-          component={HomeNavigator}
-          options={{
-            tabBarIcon: () => (
-              <FontAwsomeIcon name="home" color="black" size={26} />
-            ),
-          }}
-        />
+
         <Tab.Screen
           name="discovey"
           component={Discovery}
@@ -106,6 +127,13 @@ const App = () => {
             ),
           }}></Tab.Screen>
       </Tab.Navigator>
+      {isVisible && (
+        <MusicPlay
+          setIsVisible={(a) => {
+            setIsVisible(a);
+          }}
+          isVisible={isVisible}></MusicPlay>
+      )}
     </NavigationContainer>
   );
 };

@@ -6,6 +6,7 @@ export default function VideoComponent() {
   return (
     <View>
       <Video
+        paused
         controls
         source={require('../homevideo.mp4')} // Can be a URL or a local file.
         style={styles.backgroundVideo}

@@ -1,14 +1,17 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 
-export default function Song() {
+export default function Song(props) {
   return (
     <View style={styles.contentContainer}>
       <Image
         style={styles.image}
         source={require('../Asset/music.jpg')}></Image>
       <View>
-        <Text style={styles.title}>All into nothing</Text>
+        <Text onPress={props.setIsVisible} style={styles.title}>
+          All into nothing
+        </Text>
         <Text style={styles.artist}>Mokiato</Text>
       </View>
     </View>
